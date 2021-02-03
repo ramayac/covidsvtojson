@@ -1,0 +1,16 @@
+{
+  "name": "covidsvtojson",
+  "version": "1.0.0",
+  "description": "Parser for covid19.sv pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ramayac",
+  "license": "MIT",
+  "dependencies": {
+    "dateformat": "^4.5.1",
+    "node-fetch": "^2.6.1",
+    "x-ray": "^2.3.4"
+  }
+}
