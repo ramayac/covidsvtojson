@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "dateformat": "^4.5.1",
-    "node-fetch": "^2.6.1",
-    "x-ray": "^2.3.4"
+    "node-fetch": "^2.6.1"
   }
 }

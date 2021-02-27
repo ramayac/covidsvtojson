@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const Xray = require('x-ray');
 
 const fetch = require('node-fetch');
 const dateFormat = require("dateformat");
@@ -13,41 +12,6 @@ const REPLACE_ACCENTS = [
  ['ó', 'o'],
  ['ú', 'u']
 ];
-
-/**
- * Parses the Covid19 SV page, and turns it into a nice little formated JSON file
- * @param {*} inFilename 
- * @param {*} outJson 
- * @deprecated
- */
-function extractInfoFromPage(date){
-    var inFilename = 'pages\\'+ date +'.html';
-    var outJson = 'json\\' + date + '.json';
-
-    var xray = Xray()
-    var html = fs.readFileSync(path.resolve(__dirname, inFilename));
-
-    xray(html, 'div#bloc-8', ['.no-gutters']).then(function(results){  
-        var jItems = [];
-        
-        //console.log(jItems);
-        try {
-            results.forEach(function(value){
-                var cleanItem = cleanResults(value);
-                var parsedItem = parseItem(cleanItem);
-                if(parsedItem != null){
-                    jItems.push(parsedItem);
-                }
-
-            });
-
-            console.log('Processed date: ' + date);
-            fs.writeFileSync(outJson, JSON.stringify(jItems));
-        } catch (err) {
-            console.error(err);
-        }
-    });
-}
 
 function extractJSFromPage(date){
     var inFilename = 'pages\\'+ date +'.html';
@@ -168,20 +132,6 @@ function fetchAllPagesAndSaveThem(arrOfDates){
     });
 }
 
-/**
- * @deprecated
- * @param {*} arrOfDates 
- */
-function extractAllData(arrOfDates){
-    var allItems = [];
-    arrOfDates.forEach(function(value, index){
-        console.log('Processing ...' + value);
-        const item = extractInfoFromPage(value);
-        allItems[value] = item;
-    });
-    return allItems;
-}
-
 function extractJsData(arrOfDates){
     var allItems = [];
     arrOfDates.forEach(function(value){
@@ -218,7 +168,6 @@ dateRange.forEach(function(value){
 //1 - Fetch all the pages from a date range. Takes like a minute to download all...
 //fetchAllPagesAndSaveThem(formatedDateRange);
 //2 - extract the info.
-//extractAllData(formatedDateRange);
 extractJsData(formatedDateRange);
 //3 - consolidate
 consolidateAllData(formatedDateRange);
